@@ -11,5 +11,10 @@ export async function criar(req:Request, res:Response){
         role
     );
 
-    return res.status(201).json(usuario)
+    return res.status(201).json({
+        id: usuario.id,
+        nome: usuario.nome,
+        email: usuario.email,
+        role: usuario.role,
+    });
 }
