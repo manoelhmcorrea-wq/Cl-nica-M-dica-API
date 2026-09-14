@@ -1,4 +1,5 @@
 import {Request, Response, NextFunction} from "express";
+import { AppError  } from "../utils/AppError";
 
 export function errorMiddleware(
     error:Error,
@@ -6,7 +7,14 @@ export function errorMiddleware(
     res:Response,
     next:NextFunction
 ) {
-    return res.status(400).json({
-        erro: error.message
+
+    if (error instanceof AppError){
+        return res.status(error.statusCode).json({
+            erro: error.message
+        })
+    }
+
+    return res.status(500).json({
+        erro: "Erro interno do servidor"
     });
 }

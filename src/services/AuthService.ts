@@ -1,19 +1,20 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { buscarPorEmail } from "../repositories/UsuarioRepository";
+import { AppError } from "../utils/AppError";
 
 export async function login(email:string, senha:string) {
     
     const usuario = await buscarPorEmail(email);
 
     if(!usuario){
-        throw new Error("E-mail ou senha inválidos");
+        throw new AppError("E-mail ou senha inválidos", 401);
     }
 
     const senhaValida = await bcrypt.compare(senha, usuario.senha);
 
     if (!senhaValida){
-        throw new Error("E-mail ou senha inválidos");
+        throw new AppError("E-mail ou senha inválidos", 401);
     }
 
     const token = jwt.sign(
@@ -27,6 +28,11 @@ export async function login(email:string, senha:string) {
     }
 );
     return{
-        token
+        token,
+        usuario:{
+            id:usuario.id,
+            role:usuario.role
+        },
+        expiraEm: "1 hora"
     };
 }
