@@ -17,15 +17,15 @@ export async function login(email:string, senha:string) {
     }
 
     const token = jwt.sign(
-        {
-            id:usuario.id,
-            role:usuario.role
-        },
-        process.env.JWT_SECRET as string,
-        {
-            expiresIn: "1h"
-        }
-    );
+    {
+        id: usuario.id,
+        role: usuario.role
+    },
+    process.env.JWT_SECRET as string,
+    {
+        expiresIn: "1h"
+    }
+);
     return{
         token
     };
