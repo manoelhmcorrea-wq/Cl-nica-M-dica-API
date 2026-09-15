@@ -2,7 +2,7 @@ import { Request,Response,NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
 export function authMiddleware(
-    req: Request,
+    req: AuthRequest,
     res: Response,
     next: NextFunction
 ) {
@@ -22,7 +22,16 @@ export function authMiddleware(
             process.env.JWT_SECRET as string
         );
 
-        console.log(payload);
+        if(typeof payload === "string") {
+            return res.status(401).json({
+                erro: "Token inválido"
+            });
+        }
+
+        req.user = {
+            id: payload.id as string,
+            role:payload.role as string
+        };
 
         next();
     } catch(error) {
@@ -30,4 +39,11 @@ export function authMiddleware(
             erro: "Token inválido ou expirado"
         });
     }
+}
+
+export interface AuthRequest extends Request{
+    user?:{
+        id:string;
+        role:string;
+    };
 }
