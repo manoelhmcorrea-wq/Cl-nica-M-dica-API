@@ -1,7 +1,8 @@
 import { Router } from "express";
 import { autenticar } from "../controllers/AuthController";
 import { authMiddleware } from "../middlewares/authMiddleware";
-import { roleMiddliware } from "../middlewares/roleMiddleware";
+import { roleMiddleware } from "../middlewares/roleMiddleware";
+import { Role } from "../utils/roles";
 
 const router = Router();
 
@@ -16,7 +17,7 @@ router.get("/perfil",authMiddleware,(req,res) => {
 router.get(
     "/admin",
     authMiddleware,
-    roleMiddliware("ADMINISTRADOR"),
+    roleMiddleware(Role.ADMINISTRADOR),
     (req,res) => {
         return res.json({
         mensagem: "Você é um administrador!"

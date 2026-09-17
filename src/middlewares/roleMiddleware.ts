@@ -1,7 +1,8 @@
 import {NextFunction, Request, Response} from "express";
 import { AuthRequest } from "./authMiddleware";
+import {Role} from "../utils/roles"
 
-export function roleMiddliware(...rolesPermitidas: string[]){
+export function roleMiddleware(...rolesPermitidas: Role[]){
 
     return(
         req: AuthRequest,

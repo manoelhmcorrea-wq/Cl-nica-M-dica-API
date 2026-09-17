@@ -1,12 +1,13 @@
 import bcrypt from "bcrypt";
 import {buscarPorEmail, salvar} from "../repositories/UsuarioRepository";
 import { Usuario } from "../entities/Usuario";
+import { Role } from "../utils/roles";
 
 export async function criarUsuario(
     nome:string,
     email:string,
     senha:string,
-    role:string
+    role:Role
 ){
     const usuarioExiste = await buscarPorEmail(email);
 

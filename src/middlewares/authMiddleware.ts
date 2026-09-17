@@ -1,5 +1,6 @@
 import { Request,Response,NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import { Role } from "../utils/roles";
 
 export function authMiddleware(
     req: AuthRequest,
@@ -30,7 +31,7 @@ export function authMiddleware(
 
         req.user = {
             id: payload.id as string,
-            role:payload.role as string
+            role:payload.role as Role
         };
 
         next();
@@ -44,6 +45,6 @@ export function authMiddleware(
 export interface AuthRequest extends Request{
     user?:{
         id:string;
-        role:string;
+        role:Role;
     };
 }

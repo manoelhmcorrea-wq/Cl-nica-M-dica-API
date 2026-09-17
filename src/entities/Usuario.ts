@@ -5,7 +5,7 @@ import {Role} from "../utils/roles"
 export class Usuario {
 
     @PrimaryGeneratedColumn("uuid")
-    id!: number;
+    id!: string;
 
     @Column("varchar")
     nome!: string;
