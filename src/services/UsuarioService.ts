@@ -26,3 +26,26 @@ export async function criarUsuario(
 
     return salvar(usuario);
 }
+
+export async function criarAdministrador(
+    nome: string,
+    email: string,
+    senha: string
+) {
+    const usuarioExiste = await buscarPorEmail(email);
+
+    if (usuarioExiste) {
+        throw new AppError("E-mail já cadastrado", 409);
+    }
+
+    const senhaHash = await bcrypt.hash(senha, 10);
+
+    const usuario = new Usuario();
+
+    usuario.nome = nome;
+    usuario.email = email;
+    usuario.senha = senhaHash;
+    usuario.role = Role.ADMINISTRADOR;
+
+    return salvar(usuario);
+}
