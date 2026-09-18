@@ -64,7 +64,7 @@ http://localhost:3000
 ## Arquitetura do projeto
 
 O projeto utiliza uma arquitetura em camadas:
-
+```text
 src/
 ├── controllers/
 ├── database/
@@ -74,7 +74,7 @@ src/
 ├── routes/
 ├── services/
 └── utils/
-
+```
 ## Responsabilidades
 
 - Routes: definição das rotas da API
