@@ -3,24 +3,28 @@ import { autenticar } from "../controllers/AuthController";
 import { authMiddleware } from "../middlewares/authMiddleware";
 import { roleMiddleware } from "../middlewares/roleMiddleware";
 import { Role } from "../utils/roles";
+import { AuthRequest } from "../middlewares/authMiddleware";
 
 const router = Router();
 
 router.post("/login",autenticar);
 
-router.get("/perfil",authMiddleware,(req,res) => {
+router.get("/users/me",authMiddleware,(req:AuthRequest,res) => {
     return res.json({
-        mensagem: "Você está autenticado!"
+        id:req.user!.id,
+        role:req.user!.role
     });
 });
 
 router.get(
-    "/admin",
+    "/admin/ping",
     authMiddleware,
     roleMiddleware(Role.ADMINISTRADOR),
-    (req,res) => {
+    (req:AuthRequest,res) => {
         return res.json({
-        mensagem: "Você é um administrador!"
+        mensagem: "Acesso administrativo autorizado!",
+        id:req.user!.id,
+        role:req.user!.role
         });
     }
 );
